@@ -1,6 +1,6 @@
 # 🚀 Flowise + OpenSearch Setup Guide (Fixed & Working)
 
-This guide provides a **step-by-step installation** of **Flowise** with **OpenSearch** on Ubuntu using **Docker**, incorporating all necessary fixes.
+This guide provides a **step-by-step installation** of **Flowise** with **OpenSearch** on Ubuntu using **Docker**.
 
 ---
 
@@ -28,14 +28,14 @@ docker network create flowise-net
 
 ---
 
-## **3️⃣ Run OpenSearch (Fixing SSL/TLS Issues)**
-Start OpenSearch **without security** (no HTTPS, no SSL errors):
-
+## **3️⃣ Run OpenSearch**
+Start OpenSearch
+--Use your own password. 8 Chars, Uppercase, Lowercase, Numbers, Special Characters required otherwise Opensearch will not start.
 ```bash
-docker run -d --name opensearch   --network flowise-net   -p 9200:9200 -p 9600:9600   -e "discovery.type=single-node"   -e "plugins.ml_commons.only_run_on_ml_node=false"   -e "OPENSEARCH_INITIAL_ADMIN_PASSWORD=StrongPass!123"   -e "DISABLE_SECURITY_PLUGIN=true"   -e "OPENSEARCH_JAVA_OPTS=-Xms2g -Xmx2g"   opensearchproject/opensearch:latest
+docker run -d --name opensearch   --network flowise-net   -p 9200:9200 -p 9600:9600   -e "discovery.type=single-node"   -e "plugins.ml_commons.only_run_on_ml_node=false"   -e 'OPENSEARCH_INITIAL_ADMIN_PASSWORD=StrongPass!123'   -e "DISABLE_SECURITY_PLUGIN=true"   -e "OPENSEARCH_JAVA_OPTS=-Xms2g -Xmx2g"   opensearchproject/opensearch:latest
 ```
 ✅ **Fixes Applied:**
-- `DISABLE_SECURITY_PLUGIN=true` → Disables SSL so OpenSearch works with **HTTP**.
+- `DISABLE_SECURITY_PLUGIN=true` → Disables SSL so OpenSearch works with **HTTP**. Flowise for some reason refusing to work over HTTPS
 - `-Xms2g -Xmx2g` → Ensures OpenSearch **does not crash** due to low memory.
 
 ### **Wait 2-3 minutes for OpenSearch to fully start** before moving to the next step.
@@ -47,7 +47,7 @@ docker ps
 
 Verify OpenSearch responds:
 ```bash
-curl -u 'admin:StrongPass!123' http://localhost:9200
+curl -u 'admin:StrongPass!123' http://localhost:9200 or http://opensearch:9200
 ```
 ✅ **Expected Output (JSON Response)**
 ```json
@@ -78,13 +78,12 @@ docker ps
 
 ## **5️⃣ Configure Flowise to Connect to OpenSearch**
 1. Open **Flowise UI** at **`http://localhost:3000`**
-2. **Go to `Settings > Database`**
+2. **Go to `Credentials > Opensearch`**
 3. **Enter OpenSearch Details:**
    - **Host**: `http://opensearch:9200` *(HTTP, not HTTPS)*
    - **Username**: `admin`
-   - **Password**: `StrongPass!123`
+   - **Password**: `StrongPass!123` (use password you configured)
    - **Index Name**: `flowise_vectors`
-   - **Dimension**: `1536`
 4. **Save & Restart Flowise.**
 
 ---
@@ -146,24 +145,6 @@ curl -X GET "http://localhost:9200/flowise_vectors/_doc/1"   -H "Content-Type: a
    exit
    ```
    ✅ **If this works, Flowise can reach OpenSearch.**
-
----
-
-## **✅ Final Recap: What We Fixed**
-1. **Fixed OpenSearch Connection Issues** 🚀  
-   - Disabled SSL (`DISABLE_SECURITY_PLUGIN=true`)
-   - Used `http://opensearch:9200` instead of HTTPS.
-   - Ensured enough memory (`-Xms2g -Xmx2g`).
-
-2. **Fixed Docker Network Issues** 🌐  
-   - Created `flowise-net` so Flowise & OpenSearch can communicate.
-
-3. **Fixed Indexing & Vector Storage Issues** 📊  
-   - Created the `flowise_vectors` index **before** running Flowise.
-   - Verified vector insertion manually.
-
-4. **Tested & Verified Connectivity** 🛠  
-   - Used `curl` from both **host** and **inside Flowise container**.
 
 ---
 
