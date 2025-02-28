@@ -8,6 +8,11 @@
                     "name": "anthropic.claude-3-7-sonnet-20250219-v1:0",
                     "description": "(20250219-v1:0) specific version of Claude Sonnet 3.7 - hybrid reasoning model"
                 },
+                 {
+                    "label": "us.anthropic.claude-3-7-sonnet-20250219-v1:0",
+                    "name": "us.anthropic.claude-3-7-sonnet-20250219-v1:0",
+                    "description": "Cross Model"
+                },
                 {
                     "label": "anthropic.claude-3-5-haiku-20241022-v1:0",
                     "name": "anthropic.claude-3-5-haiku-20241022-v1:0",
