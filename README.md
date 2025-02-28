@@ -1,4 +1,9 @@
-[![Flowise + OpenSearch Setup Guide](https://img.youtube.com/vi/vZFEeXwcdgY/0.jpg)](https://www.youtube.com/watch?v=vZFEeXwcdgY)
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=I8LIMKVPZqE">
+    <img src="https://img.youtube.com/vi/I8LIMKVPZqE/0.jpg" alt="Watch on YouTube" width="600">
+  </a>
+</p>
+
 
 # 🚀 Flowise + OpenSearch Setup Guide (Fixed & Working)
 
