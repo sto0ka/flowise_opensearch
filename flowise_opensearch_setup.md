@@ -1,3 +1,5 @@
+[![Flowise + OpenSearch Setup Guide](https://img.youtube.com/vi/vZFEeXwcdgY/0.jpg)](https://www.youtube.com/watch?v=vZFEeXwcdgY)
+
 # 🚀 Flowise + OpenSearch Setup Guide (Fixed & Working)
 
 This guide provides a **step-by-step installation** of **Flowise** with **OpenSearch** on Ubuntu using **Docker**.
